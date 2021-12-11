@@ -1,0 +1,78 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    hostname: mongo
+    restart: unless-stopped
+    ports:
+      - $MONGO_HOST_PORT:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE=$MONGO_DB
+      - MONGO_DB_USERNAME=$MONGO_DB_USERNAME
+      - MONGO_DB_PASSWORD=$MONGO_DB_PASSWORD
+    volumes:
+      - $MONGO_DATA_HOST_PATH:/data/db/
+      - $MONGO_LOG_HOST_PATH:/var/log/mongodb/
+      - $MONGO_INITDB_SCRIPTS_HOST_PATH:/docker-entrypoint-initdb.d/
+    networks:
+      - main-network
+    command: ["--bind_ip", "0.0.0.0"]
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    container_name: elasticsearch
+    hostname: es
+    restart: unless-stopped
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - $ELASTICSEARCH_DATA_HOST_PATH:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - main-network
+    command: ["--bind_ip", "0.0.0.0"]
+  
+  query:
+    container_name: query
+    hostname: query
+    depends_on:
+      - elasticsearch
+    build: ./query
+    restart: on-failure
+    ports:
+      - "$QUERY_LOCAL_PORT:$QUERY_DOCKER_PORT"
+    stdin_open: true
+    tty: true
+    networks:
+      - main-network
+
+  command:
+    container_name: command
+    hostname: command
+    depends_on:
+      - mongo
+    build: ./command
+    restart: on-failure
+    ports:
+      - "$COMMAND_LOCAL_PORT:$COMMAND_DOCKER_PORT"
+    stdin_open: true
+    tty: true
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    external:
+      name: $NETWORK_NAME
