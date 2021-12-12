@@ -7,6 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductRepository extends ElasticsearchRepository<Product, UUID> {
-    @Override
     Optional<Product> findById(UUID uuid);
 }

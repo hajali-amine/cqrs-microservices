@@ -19,7 +19,6 @@ services:
       - $MONGO_INITDB_SCRIPTS_HOST_PATH:/docker-entrypoint-initdb.d/
     networks:
       - main-network
-    command: ["--bind_ip", "0.0.0.0"]
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
@@ -42,7 +41,6 @@ services:
       - 9300:9300
     networks:
       - main-network
-    command: ["--bind_ip", "0.0.0.0"]
   
   query:
     container_name: query
