@@ -2,9 +2,9 @@
 !*/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-./db
-./initdb.d
-./log
+db
+initdb.d
+log
 
 ### STS ###
 */.apt_generated
