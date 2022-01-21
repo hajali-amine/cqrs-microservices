@@ -17,18 +17,20 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @ComponentScan(basePackages = "cqrs.microservice.query")
 public class EsConfig extends AbstractElasticsearchConfiguration {
     @Value("${elasticsearch.host}")
-    private String EsHost;
+    private String esHost;
 
     @Value("${elasticsearch.port}")
-    private int EsPort;
+    private String esPort;
 
-    @Bean
-    @SneakyThrows
     @Override
+    @Bean
     public RestHighLevelClient elasticsearchClient() {
-        final ClientConfiguration config = ClientConfiguration.builder()
-                .connectedTo(EsHost + ":" + EsPort)
-                .build();
-        return RestClients.create(config).rest();
+        final ClientConfiguration clientConfiguration =
+                ClientConfiguration
+                        .builder()
+                        .connectedTo(esHost + ":" + esPort)
+                        .build();
+
+        return RestClients.create(clientConfiguration).rest();
     }
 }

@@ -11,11 +11,18 @@ import java.util.UUID;
 public class Product {
     @Id
     @Field(type = FieldType.Keyword)
-    private UUID uuid;
+    private String id;
 
+    @Field(type = FieldType.Text, name = "name")
     private String name;
+
+    @Field(type = FieldType.Text, name = "desc")
     private String description;
+
+    @Field(type = FieldType.Float, name = "price")
     private float price;
+
+    @Field(type = FieldType.Integer, name = "quantity")
     private int quantity;
 
     public Product(String name, String description, float price, int quantity) {

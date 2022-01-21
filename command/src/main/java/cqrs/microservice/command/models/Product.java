@@ -3,12 +3,10 @@ package cqrs.microservice.command.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
 @Document("products")
 public class Product {
     @Id
-    private UUID uuid;
+    private String uuid;
 
     private String name;
     private String description;
