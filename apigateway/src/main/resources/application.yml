@@ -17,6 +17,11 @@ spring:
           uri: lb://COMMAND-SERVICE
           predicates:
             - Path=/command/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: commandCircuitBreaker
+                fallbackUri: forward:/commandFallBack
 
 eureka:
   client:

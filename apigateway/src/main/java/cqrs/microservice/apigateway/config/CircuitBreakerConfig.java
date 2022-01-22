@@ -1,4 +1,4 @@
-package config;
+package cqrs.microservice.apigateway.config;
 
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;

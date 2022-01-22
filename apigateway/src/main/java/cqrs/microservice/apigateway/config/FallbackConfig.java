@@ -1,4 +1,4 @@
-package config;
+package cqrs.microservice.apigateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class FallbackConfig {
     }
 
     public Mono<ServerResponse> handleGetFallback(ServerRequest request) {
-        return ServerResponse.ok().body(Mono.empty(), String.class);
+        return ServerResponse.ok().body(Mono.just("The query service seems unavailable"), String.class);
     }
 
     public Mono<ServerResponse> handlePostFallback(ServerRequest request) {

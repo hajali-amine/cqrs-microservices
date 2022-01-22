@@ -1,4 +1,4 @@
-package controllers;
+package cqrs.microservice.apigateway.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
