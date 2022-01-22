@@ -3,39 +3,37 @@ services:
   mongo:
     image: mongo:4.4
     container_name: mongo
-    hostname: mongo
     restart: unless-stopped
     ports:
-      - $MONGO_HOST_PORT:27017
+      - 26000:27017
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_ROOT_PASSWORD
-      - MONGO_INITDB_DATABASE=$MONGO_DB
-      - MONGO_DB_USERNAME=$MONGO_DB_USERNAME
-      - MONGO_DB_PASSWORD=$MONGO_DB_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=cqrs
+      - MONGO_DB_USERNAME=user
+      - MONGO_DB_PASSWORD=user
     volumes:
-      - $MONGO_DATA_HOST_PATH:/data/db/
-      - $MONGO_LOG_HOST_PATH:/var/log/mongodb/
-      - $MONGO_INITDB_SCRIPTS_HOST_PATH:/docker-entrypoint-initdb.d/
+      - ./db/mongo/data:/data/db/
+      - ./log/mongo/logs:/var/log/mongodb/
+      - ./initdb.d:/docker-entrypoint-initdb.d/
     networks:
       - main-network
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-    container_name: elasticsearch
-    hostname: es
-    restart: unless-stopped
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: es
     environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
+      - node.name=es
+      - bootstrap.memory_lock=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.seed_hosts=127.0.0.1:9300
+    mem_limit: 2g
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    cap_add:
-      - IPC_LOCK
     volumes:
-      - $ELASTICSEARCH_DATA_HOST_PATH:/usr/share/elasticsearch/data
+      - ./db/es/data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
