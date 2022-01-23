@@ -1,28 +1,34 @@
 package cqrs.microservice.command.controllers;
 
+import cqrs.microservice.command.commands.CreateProductCommand;
 import cqrs.microservice.command.models.Product;
 import cqrs.microservice.command.services.ProductService;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/command")
 public class ProductController {
     @Autowired
     ProductService productService;
-
-    @GetMapping("/")
-    public List<Product> getProds(){
-        return this.productService.getProducts();
-    }
+    @Autowired
+    EventStore eventStore;
 
     @PostMapping("/add")
-    public Product addProduct(){
-        return this.productService.addProduct();
+    public CompletableFuture<String> createProduct(@RequestBody Product product){
+        return productService.addProductEvent(product);
+    }
+    @GetMapping("/")
+    public List<Object> getAll() {
+//        return this.productService.getProducts();
+        return eventStore.readEvents("xz").asStream().map(s -> s.getPayload()).collect(Collectors.toList());
     }
 }

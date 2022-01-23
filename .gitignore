@@ -5,6 +5,7 @@
 db
 initdb.d
 log
+eventstore
 
 ### STS ###
 */.apt_generated

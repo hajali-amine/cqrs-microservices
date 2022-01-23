@@ -23,10 +23,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     container_name: es
     environment:
-      - node.name=es
-      - bootstrap.memory_lock=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.seed_hosts=127.0.0.1:9300
+      - discovery.type=single-node
     mem_limit: 2g
     ulimits:
       memlock:
@@ -37,6 +34,20 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    networks:
+      - main-network
+  
+  axon:
+    image: axoniq/axonserver
+    container_name: axon
+    restart: on-failure
+    ports: 
+      - 8024:8024
+      - 8124:8124
+    volumes:
+      - ./eventstore/data:/data
+      - ./eventstore/eventdata:/eventdata
+      - ./eventstore/config:/config:ro
     networks:
       - main-network
   

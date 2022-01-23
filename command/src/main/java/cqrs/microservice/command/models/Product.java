@@ -1,54 +1,26 @@
 package cqrs.microservice.command.models;
 
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("products")
+import java.util.Collection;
+
+@Getter
+@Document(collection = "Products")
 public class Product {
     @Id
-    private String uuid;
+    private final String ref;
+    private final String name;
+    private final String description;
+    private final float price;
+    private final int quantity;
 
-    private String name;
-    private String description;
-    private float price;
-    private int quantity;
-
-    public Product(String name, String description, float price, int quantity) {
+    public Product(String ref, String name, String description, float price, int quantity) {
+        this.ref = ref;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }
