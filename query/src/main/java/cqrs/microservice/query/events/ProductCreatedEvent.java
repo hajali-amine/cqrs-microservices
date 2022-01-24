@@ -1,30 +1,19 @@
 package cqrs.microservice.query.events;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
+
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class ProductCreatedEvent {
-    private final String ref;
-    private final String name;
-    private final String description;
-    private final float price;
-    private final int quantity;
-
-    public String getProductRef() {
-        return this.ref;
-    }
-    public String getProductName() {
-        return this.name;
-    }
-    public String getProductDescription() {
-        return this.description;
-    }
-    public float getProductPrice() {
-        return this.price;
-    }
-    public int getProductQuantity() {
-        return this.quantity;
-    }
+    private String ref;
+    private String name;
+    private String description;
+    private float price;
+    private int quantity;
 }

@@ -6,6 +6,7 @@ db
 initdb.d
 log
 eventstore
+rabbitmq
 
 ### STS ###
 */.apt_generated

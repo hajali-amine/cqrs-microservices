@@ -1,6 +1,5 @@
 package cqrs.microservice.query.models;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -13,7 +12,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XStreamAlias("assets")
 @Document(indexName = "products")
 public class Product {
     @Id

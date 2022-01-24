@@ -1,24 +1,23 @@
 package cqrs.microservice.command.services;
 
-import cqrs.microservice.command.aggregates.ProductAggregate;
-import cqrs.microservice.command.commands.CreateProductCommand;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import cqrs.microservice.command.events.ProductCreatedEvent;
 import cqrs.microservice.command.models.Product;
 import cqrs.microservice.command.repositories.ProductRepository;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import cqrs.microservice.command.senders.CreateProductSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProductService {
     private ProductRepository productRepository;
-    private CommandGateway commandGateway;
+    private CreateProductSender createProductSender;
 
-    public ProductService(ProductRepository productRepository, CommandGateway commandGateway) {
+    public ProductService(ProductRepository productRepository, CreateProductSender createProductSender) {
         this.productRepository = productRepository;
-        this.commandGateway = commandGateway;
+        this.createProductSender = createProductSender;
     }
 
     public Product addProduct(Product product){
@@ -29,15 +28,16 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
-    public CompletableFuture<String> addProductEvent(Product product) {
-        CreateProductCommand command = new CreateProductCommand(
+    public void addProductEvent(Product product) throws JsonProcessingException {
+        ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(
                 product.getRef(),
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
                 product.getQuantity()
         );
-        System.out.println(command);
-        return commandGateway.send(command);
+        createProductSender.send(productCreatedEvent);
+//        System.out.println(command);
+//        return commandGateway.send(command);
     }
 }

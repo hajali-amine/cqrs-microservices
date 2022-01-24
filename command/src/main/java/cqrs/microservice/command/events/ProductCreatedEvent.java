@@ -11,20 +11,4 @@ public class ProductCreatedEvent {
     private final String description;
     private final float price;
     private final int quantity;
-
-    public String getProductRef() {
-        return this.ref;
-    }
-    public String getProductName() {
-        return this.name;
-    }
-    public String getProductDescription() {
-        return this.description;
-    }
-    public float getProductPrice() {
-        return this.price;
-    }
-    public int getProductQuantity() {
-        return this.quantity;
-    }
 }
