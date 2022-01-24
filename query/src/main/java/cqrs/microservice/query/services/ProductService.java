@@ -9,17 +9,22 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProd(){
+    public List<Product> getProducts(){
         return this.productRepository.findAll();
     }
 
-    public Product addProduct(Product product){
-        return productRepository.save(product);
+    public void addProduct(Product product){
+        this.productRepository.save(product);
+    }
+
+    public List<Product> purgeDb() {
+        this.productRepository.findAll().forEach(this.productRepository::delete);
+        return this.productRepository.findAll();
     }
 }

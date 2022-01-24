@@ -10,25 +10,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
-    private CreateProductSender createProductSender;
+    private final ProductRepository productRepository;
+    private final CreateProductSender createProductSender;
 
     public ProductService(ProductRepository productRepository, CreateProductSender createProductSender) {
         this.productRepository = productRepository;
         this.createProductSender = createProductSender;
     }
 
-    public Product addProduct(Product product){
-        return this.productRepository.save(product);
-    }
-
     public List<Product> getProducts(){
         return this.productRepository.findAll();
     }
 
-    public void addProductEvent(Product product) throws JsonProcessingException {
+    public Product addProduct(Product product) throws JsonProcessingException {
+        Product productAdded = this.productRepository.save(product);
         ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(
                 product.getRef(),
                 product.getName(),
@@ -36,8 +34,12 @@ public class ProductService {
                 product.getPrice(),
                 product.getQuantity()
         );
-        createProductSender.send(productCreatedEvent);
-//        System.out.println(command);
-//        return commandGateway.send(command);
+        this.createProductSender.send(productCreatedEvent);
+        return productAdded;
+    }
+
+    public List<Product> purgeDb() {
+        this.productRepository.findAll().forEach(this.productRepository::delete);
+        return this.productRepository.findAll();
     }
 }

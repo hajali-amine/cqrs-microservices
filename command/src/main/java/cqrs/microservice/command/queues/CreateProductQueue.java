@@ -7,19 +7,20 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class CreateProductQueue {
-    static final String topicExchangeName = "create-product-queue";
-    static final String queueName = "create-product-queue";
+    public static final String TOPIC_EXCHANGE_NAME = "create-product-queue";
+    public static final String QUEUE_NAME = "create-product-queue";
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+        return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean

@@ -8,7 +8,6 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 public class FallbackConfig {
-
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
         return RouterFunctions

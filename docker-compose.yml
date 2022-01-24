@@ -51,31 +51,47 @@ services:
   
   query:
     container_name: query
-    hostname: query
     depends_on:
       - elasticsearch
     build: ./query
     restart: on-failure
-    ports:
-      - "$QUERY_LOCAL_PORT:$QUERY_DOCKER_PORT"
-    stdin_open: true
-    tty: true
     networks:
       - main-network
 
   command:
     container_name: command
-    hostname: command
     depends_on:
       - mongo
     build: ./command
     restart: on-failure
-    ports:
-      - "$COMMAND_LOCAL_PORT:$COMMAND_DOCKER_PORT"
-    stdin_open: true
-    tty: true
     networks:
       - main-network
+  
+  apigateway:
+    container_name: apigateway
+    depends_on:
+      - 
+    build: ./apigateway
+    restart: on-failure
+    ports:
+      - 8080:8080
+    networks:
+      - main-network
+    
+  registry:
+    container_name: registry
+    build: ./registry
+    restart: on-failure
+    networks:
+      - main-network
+
+  config:
+    container_name: config
+    build: ./config
+    restart: on-failure
+    networks:
+      - main-network
+    
 
 networks:
   main-network:

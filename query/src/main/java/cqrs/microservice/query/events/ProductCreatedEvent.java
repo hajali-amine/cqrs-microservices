@@ -1,9 +1,7 @@
 package cqrs.microservice.query.events;
 
 import lombok.*;
-import lombok.extern.jackson.Jacksonized;
 
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor

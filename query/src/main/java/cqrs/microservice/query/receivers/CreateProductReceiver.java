@@ -1,26 +1,30 @@
 package cqrs.microservice.query.receivers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import cqrs.microservice.query.events.ProductCreatedEvent;
+import cqrs.microservice.query.models.Product;
+import cqrs.microservice.query.services.ProductService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CountDownLatch;
 
 @Component
 public class CreateProductReceiver {
-    private CountDownLatch latch = new CountDownLatch(1);
+    ProductService productService;
 
-    @RabbitListener(queues = "create-product-queue")
-    public void receiveMessage(Message<ProductCreatedEvent> message) throws JsonProcessingException {
-        System.out.println("Test");
-        System.out.println(message.getPayload());
+    public CreateProductReceiver(ProductService productService) {
+        this.productService = productService;
     }
 
-    public CountDownLatch getLatch() {
-        return latch;
+    @RabbitListener(queues = "create-product-queue")
+    public void receiveMessage(Message<ProductCreatedEvent> message) {
+        Product product = new Product(
+                message.getPayload().getRef(),
+                message.getPayload().getName(),
+                message.getPayload().getDescription(),
+                message.getPayload().getPrice(),
+                message.getPayload().getQuantity()
+        );
+        productService.addProduct(product);
     }
 }
