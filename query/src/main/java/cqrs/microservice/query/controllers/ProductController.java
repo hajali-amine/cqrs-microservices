@@ -2,10 +2,7 @@ package cqrs.microservice.query.controllers;
 
 import cqrs.microservice.query.models.Product;
 import cqrs.microservice.query.services.ProductService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +16,13 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public List<Product> getProd(){
+    public List<Product> getProducts(){
         return this.productService.getProducts();
+    }
+
+    @GetMapping("/{ref}")
+    public Product getProductByRef(@PathVariable String ref){
+        return this.productService.getProductByRef(ref);
     }
 
     @DeleteMapping("/purge")

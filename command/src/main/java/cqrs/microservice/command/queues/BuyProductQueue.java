@@ -1,4 +1,4 @@
-package cqrs.microservice.query.queues;
+package cqrs.microservice.command.queues;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -9,22 +9,22 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class CreateProductQueue {
-    static final String TOPIC_EXCHANGE_NAME = "create-product-queue";
-    static final String QUEUE_NAME = "create-product-queue";
+public class BuyProductQueue {
+    public static final String TOPIC_EXCHANGE_NAME = "buy-product-queue";
+    public static final String QUEUE_NAME = "buy-product-queue";
 
     @Bean
-    Queue createQueue() {
+    Queue buyQueue() {
         return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
-    TopicExchange createExchange() {
+    TopicExchange buyExchange() {
         return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean
-    Binding createBinding(Queue createQueue, TopicExchange createExchange) {
-        return BindingBuilder.bind(createQueue).to(createExchange).with("create.product.#");
+    Binding buyBinding(Queue buyQueue, TopicExchange buyExchange) {
+        return BindingBuilder.bind(buyQueue).to(buyExchange).with("buy.product.#");
     }
 }

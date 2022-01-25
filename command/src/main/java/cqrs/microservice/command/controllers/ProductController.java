@@ -18,10 +18,21 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/add")
-    public Product createProduct(@RequestBody Product product) throws JsonProcessingException {
-        return this.productService.addProduct(product);
+    @PostMapping("/create")
+    public String createProduct(@RequestBody Product product) throws JsonProcessingException {
+        return this.productService.createProduct(product);
     }
+
+    @PostMapping("/buy/{ref}")
+    public String buyProduct(@PathVariable String ref) throws JsonProcessingException {
+        return this.productService.buyProduct(ref);
+    }
+
+    @PostMapping("/refill/{ref}")
+    public String refillProduct(@PathVariable String ref, @RequestParam(name="quantity", defaultValue = "0") int quantity) throws JsonProcessingException {
+        return this.productService.refillProduct(ref, quantity);
+    }
+
     @GetMapping("/")
     public List<Product> getAll() {
         return this.productService.getProducts();

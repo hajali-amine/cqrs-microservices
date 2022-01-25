@@ -14,17 +14,17 @@ public class CreateProductQueue {
     public static final String QUEUE_NAME = "create-product-queue";
 
     @Bean
-    Queue queue() {
+    Queue createQueue() {
         return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
-    TopicExchange exchange() {
+    TopicExchange createExchange() {
         return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("create.product.#");
+    Binding createBinding(Queue createQueue, TopicExchange createExchange) {
+        return BindingBuilder.bind(createQueue).to(createExchange).with("create.product.#");
     }
 }

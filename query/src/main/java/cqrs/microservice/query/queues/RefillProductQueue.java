@@ -7,24 +7,23 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
-public class CreateProductQueue {
-    static final String TOPIC_EXCHANGE_NAME = "create-product-queue";
-    static final String QUEUE_NAME = "create-product-queue";
+public class RefillProductQueue {
+    public static final String TOPIC_EXCHANGE_NAME = "refill-product-queue";
+    public static final String QUEUE_NAME = "refill-product-queue";
 
     @Bean
-    Queue createQueue() {
+    Queue refillQueue() {
         return new Queue(QUEUE_NAME, false);
     }
 
     @Bean
-    TopicExchange createExchange() {
+    TopicExchange refillExchange() {
         return new TopicExchange(TOPIC_EXCHANGE_NAME);
     }
 
     @Bean
-    Binding createBinding(Queue createQueue, TopicExchange createExchange) {
-        return BindingBuilder.bind(createQueue).to(createExchange).with("create.product.#");
+    Binding refillBinding(Queue refillQueue, TopicExchange refillExchange) {
+        return BindingBuilder.bind(refillQueue).to(refillExchange).with("refill.product.#");
     }
 }

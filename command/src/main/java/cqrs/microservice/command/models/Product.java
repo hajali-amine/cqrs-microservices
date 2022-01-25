@@ -2,18 +2,20 @@ package cqrs.microservice.command.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Getter
+@Setter
 @AllArgsConstructor
 @Document(collection = "Products")
 public class Product {
     @Id
-    private final String ref;
-    private final String name;
-    private final String description;
-    private final float price;
-    private final int quantity;
+    private String ref;
+    private String name;
+    private String description;
+    private float price;
+    private int quantity;
 }

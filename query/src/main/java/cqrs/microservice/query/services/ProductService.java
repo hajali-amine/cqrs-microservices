@@ -19,6 +19,10 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
+    public Product getProductByRef(String ref){
+            return this.productRepository.findById(ref).orElse(null);
+        }
+
     public void addProduct(Product product){
         this.productRepository.save(product);
     }
