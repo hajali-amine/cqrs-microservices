@@ -53,6 +53,10 @@ services:
     container_name: query
     depends_on:
       - elasticsearch
+      - rabbitmq
+      - registry
+      - config
+      - apigateway
     build: ./query
     restart: on-failure
     networks:
@@ -62,6 +66,10 @@ services:
     container_name: command
     depends_on:
       - mongo
+      - rabbitmq
+      - registry
+      - config
+      - apigateway
     build: ./command
     restart: on-failure
     networks:
@@ -70,7 +78,7 @@ services:
   apigateway:
     container_name: apigateway
     depends_on:
-      - 
+      - registry
     build: ./apigateway
     restart: on-failure
     ports:
@@ -80,8 +88,12 @@ services:
     
   registry:
     container_name: registry
+    depends_on:
+      - config
     build: ./registry
     restart: on-failure
+    ports:
+      - 8761:8761
     networks:
       - main-network
 
@@ -95,5 +107,3 @@ services:
 
 networks:
   main-network:
-    external:
-      name: $NETWORK_NAME
