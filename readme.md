@@ -74,7 +74,9 @@ __Query:__
 | Get Product By Reference   | Get | localhost:8080/query/_{product-ref}_ |
 
 > If you want to purge both databases, just call the following Delete requests:
+
 > localhost:8080/query/purge
+
 > localhost:8080/command/purge
 
 ## Thank you for your attention and don't forget to leave a ⭐
