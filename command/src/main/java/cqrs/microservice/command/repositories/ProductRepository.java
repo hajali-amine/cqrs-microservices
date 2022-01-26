@@ -1,6 +1,6 @@
 package cqrs.microservice.command.repositories;
 
-import cqrs.microservice.command.models.Product;
+import cqrs.microservice.command.entities.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 

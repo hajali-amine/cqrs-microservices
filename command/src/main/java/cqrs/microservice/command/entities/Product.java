@@ -1,4 +1,4 @@
-package cqrs.microservice.command.models;
+package cqrs.microservice.command.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

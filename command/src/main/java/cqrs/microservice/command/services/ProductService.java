@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import cqrs.microservice.command.events.ProductBoughtEvent;
 import cqrs.microservice.command.events.ProductCreatedEvent;
 import cqrs.microservice.command.events.ProductRefilledEvent;
-import cqrs.microservice.command.models.Product;
+import cqrs.microservice.command.entities.Product;
 import cqrs.microservice.command.repositories.ProductRepository;
 import cqrs.microservice.command.senders.BuyProductSender;
 import cqrs.microservice.command.senders.CreateProductSender;
@@ -69,7 +69,7 @@ public class ProductService {
             return "Congrats! you bought one " + boughtProduct.getName();
         }
 
-        return "We regret to inform you that! you bought one " + boughtProduct.getName();
+        return "We regret to inform you that the stock is empty!";
     }
 
     public String refillProduct(String ref, int number) throws JsonProcessingException {

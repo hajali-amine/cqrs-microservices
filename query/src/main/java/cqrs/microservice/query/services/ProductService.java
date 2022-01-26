@@ -1,6 +1,6 @@
 package cqrs.microservice.query.services;
 
-import cqrs.microservice.query.models.Product;
+import cqrs.microservice.query.entities.Product;
 import cqrs.microservice.query.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 

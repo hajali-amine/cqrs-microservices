@@ -1,7 +1,7 @@
 package cqrs.microservice.query.receivers;
 
 import cqrs.microservice.query.events.ProductBoughtEvent;
-import cqrs.microservice.query.models.Product;
+import cqrs.microservice.query.entities.Product;
 import cqrs.microservice.query.services.ProductService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.Message;

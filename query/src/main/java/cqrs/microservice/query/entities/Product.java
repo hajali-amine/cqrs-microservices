@@ -1,4 +1,4 @@
-package cqrs.microservice.query.models;
+package cqrs.microservice.query.entities;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

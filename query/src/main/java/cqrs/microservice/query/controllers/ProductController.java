@@ -1,6 +1,6 @@
 package cqrs.microservice.query.controllers;
 
-import cqrs.microservice.query.models.Product;
+import cqrs.microservice.query.entities.Product;
 import cqrs.microservice.query.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 

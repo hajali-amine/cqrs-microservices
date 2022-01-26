@@ -2,6 +2,8 @@
 !*/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.env
+.idea
 db
 initdb.d
 log
@@ -36,5 +38,3 @@ rabbitmq
 
 ### VS Code ###
 */.vscode/
-
-.idea

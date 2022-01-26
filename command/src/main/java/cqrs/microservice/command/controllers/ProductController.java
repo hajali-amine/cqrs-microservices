@@ -1,7 +1,7 @@
 package cqrs.microservice.command.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import cqrs.microservice.command.models.Product;
+import cqrs.microservice.command.entities.Product;
 
 import cqrs.microservice.command.services.ProductService;
 import org.springframework.web.bind.annotation.*;
