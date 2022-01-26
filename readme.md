@@ -79,4 +79,28 @@ __Query:__
 
 > localhost:8080/command/purge
 
+## Stress testing the project
+
+To stress test this project we used __K6__. The data provided from the tests will be visualized by __Grafana__.
+<br>
+How can you do the stress testing? Well, we have an another docker-compose file in the _stress-tester_ folder!
+<br>
+The folder contains what we need to stress test our application! It will communicate with the API Gateway using an external network that we defined in both docker-composes.
+<br>
+First, launch Grafana and InfluxDB:
+``` console
+docker-compose up -d influxdb grafana
+```
+Then launch k6:
+``` console
+docker-compose run k6 run /scripts/test-cqrs.js
+```
+The results will be shown in Grafana at _http://localhost:3000/d/k6/k6-load-testing-results_
+
+<p align="center">
+  <img src="./assets/grafana.png" alt="design" />
+</p>
+
+If you encounter any problem while testing this, __please do contact me__!
+
 ## Thank you for your attention and don't forget to leave a ⭐
