@@ -89,11 +89,11 @@ The folder contains what we need to stress test our application! It will communi
 <br>
 First, launch Grafana and InfluxDB:
 ``` console
-docker-compose up -d influxdb grafana
+aminehajali@cqrs:~/cqrs-microservices/stress-tester$ docker-compose up -d influxdb grafana
 ```
 Then launch k6:
 ``` console
-docker-compose run k6 run /scripts/test-cqrs.js
+aminehajali@cqrs:~/cqrs-microservices/stress-tester$ docker-compose run k6 run /scripts/test-cqrs.js
 ```
 The results will be shown in Grafana at _http://localhost:3000/d/k6/k6-load-testing-results_
 
