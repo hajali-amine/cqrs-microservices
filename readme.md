@@ -68,7 +68,7 @@ __Commands:__
 
 __Query:__
 
-| Command        | Method           | Request |
+| Query        | Method           | Request |
 | ------------- |:-------------:| ------------------ |
 | Get All Products     | Get | localhost:8080/query/ |
 | Get Product By Reference   | Get | localhost:8080/query/_{product-ref}_ |
