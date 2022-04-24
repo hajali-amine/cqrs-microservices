@@ -1,10 +1,7 @@
-FROM maven:3-jdk-11
+FROM openjdk:11
 
-ADD . /apigateway
 WORKDIR /apigateway
 
-RUN ls -l
+ADD ./target/apigateway-0.0.1-SNAPSHOT.jar .
 
-RUN mvn clean install -U
-
-CMD mvn spring-boot:run
+CMD java -jar ./apigateway-0.0.1-SNAPSHOT.jar

@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   mongo:
     image: mongo:4.4
@@ -24,7 +24,6 @@ services:
     container_name: es
     environment:
       - discovery.type=single-node
-    mem_limit: 2g
     ulimits:
       memlock:
         soft: -1
@@ -85,7 +84,7 @@ services:
       - 8080:8080
     networks:
       - main-network
-      - test-network
+#      - test-network
     
   registry:
     container_name: registry
@@ -109,6 +108,6 @@ services:
 networks:
   main-network:
 # External network
-  test-network:
-    external: 
-      name: network-for-stress-tests
+#  test-network:
+#    external: 
+#      name: network-for-stress-tests
