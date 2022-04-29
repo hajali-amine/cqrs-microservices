@@ -29,7 +29,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./db/es/data:/usr/share/elasticsearch/data
+      - es-data:/usr/share/elasticsearch/data/:rw
     ports:
       - 9200:9200
       - 9300:9300
@@ -44,7 +44,7 @@ services:
         - 15672:15672
     volumes:
         - ./rabbitmq/data/:/var/lib/rabbitmq/
-        - ./rabbitmq/log/:/var/log/rabbitmq
+        - rabbit-logs:/var/log/rabbitmq/
     networks:
         - main-network
   
@@ -84,7 +84,7 @@ services:
       - 8080:8080
     networks:
       - main-network
-#      - test-network
+      # - test-network
     
   registry:
     container_name: registry
@@ -96,6 +96,9 @@ services:
       - 8761:8761
     networks:
       - main-network
+    healthcheck:
+      test: "curl -f http://localhost:8761/"
+
 
   config:
     container_name: config
@@ -104,7 +107,11 @@ services:
     networks:
       - main-network
     
-
+volumes:
+  es-data:
+    driver: local
+  rabbit-logs:
+    driver: local
 networks:
   main-network:
 # External network
